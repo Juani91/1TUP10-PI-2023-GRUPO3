@@ -60,6 +60,115 @@ Algoritmo PI_1TUP10_2023_GRUPO3
 				
 			FinSi
 			
-		Mientras Que ConvertirANumero(seleccion) < 1 o ConvertirANumero(seleccion) > 6 
+		Mientras Que ConvertirANumero(seleccion) < 1 o ConvertirANumero(seleccion) > 6
+		
+		// SWITCH PARA EJECUTAR LA SELECCIÓN DEL USUARIO
+		Segun seleccion Hacer
+			"1":
+				Escribir " "
+				Escribir "======================================================================="
+				Escribir "Usted seleccionó: VENTA DE PASAJE"
+				Escribir "A continuación le solicitaremos algunos datos personales"
+				Escribir "para asignarle un lugar en nuestro viaje Vv~"
+				
+				datosPersonales(rutaVuelo, nombre, apellido, telefono, dni, nroPasajero, equipajeBodega, capacidadPasajeros, dimCapPas, noDisponibilidad)
+				
+				noDisponibilidad= Falso
+				
+				Si !noDisponibilidad Entonces
+					
+					precioPasaje(rutaVuelo, costoPasaje, capacidadPasajeros, dimCapPas, asiento, equipajeBodega, cantidadPasajes, dimCanPas)
+					
+					Segun rutaVuelo Hacer
+						"1": 
+							Mostrar "Ruta: ", rutasAereas[ConvertirANumero(rutaVuelo)-1]
+						"2": 
+							Mostrar "Ruta: ", rutasAereas[ConvertirANumero(rutaVuelo)-1]
+						"3": 
+							Mostrar "Ruta: ", rutasAereas[ConvertirANumero(rutaVuelo)-1]
+						"4": 
+							Mostrar "Ruta: ", rutasAereas[ConvertirANumero(rutaVuelo)-1]
+					FinSegun
+					
+					Escribir " "
+					Escribir "======================================================================="
+					Segun rutaVuelo Hacer
+						"1": 
+							Mostrar "Ruta: ", rutasAereas[ConvertirANumero(rutaVuelo)-1]
+						"2": 
+							Mostrar "Ruta: ", rutasAereas[ConvertirANumero(rutaVuelo)-1]
+						"3": 
+							Mostrar "Ruta: ", rutasAereas[ConvertirANumero(rutaVuelo)-1]
+						"4": 
+							Mostrar "Ruta: ", rutasAereas[ConvertirANumero(rutaVuelo)-1]
+					FinSegun
+					Escribir  "Nombre y Apellido: ", nombre," ", apellido
+					Escribir "DNI: ", dni
+					Escribir "Teléfono: ", telefono
+					Si ConvertirANumero(equipajeBodega) = 1 Entonces
+						
+						Escribir "Equipaje en bodega: Sí"
+						
+					SiNo
+						
+						Escribir "Equipaje en bodega: No"
+						
+					FinSi
+					Escribir "Número pasajero frecuente: ", nroPasajero
+					Escribir "Asiento: ", asiento
+					Escribir "Costo pasaje: $", costoPasaje
+					Escribir "======================================================================="
+					
+					datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 0] = rutaVuelo
+					datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 1] = nombre
+					datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 2] = apellido
+					datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 3] = dni
+					datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 4] = telefono
+					datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 5] = equipajeBodega
+					datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 6] = nroPasajero
+					datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 7] = ConvertirATexto(asiento)
+					datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 8] = ConvertirATexto(costoPasaje)
+					
+				FinSi		
+				
+			"2":
+				Escribir " "
+				Escribir "======================================================================="
+				Escribir "Usted seleccionó: BUSCAR PASAJE VENDIDO"
+				Escribir "A continuación le solicitaremos algunos datos para"
+				Escribir "dar con el pasaje que está buscando Vv~"
+				
+				buscarPasaje(rutaVuelo, rutasAereas, dimRutas, datosPasajero, dimDatPas1, dimDatPas2, dimDatPas3)
+				
+				
+			"3": 
+				Escribir " "
+				Escribir "======================================================================="
+				Escribir "Usted seleccionó: BUSCAR PASAJERO"
+				buscarPasajeroPorDNI(datosPasajero, dimDatPas1, dimDatPas2, dimDatPas3)
+				
+			"4":
+				Escribir " "
+				Escribir "======================================================================="
+				Escribir "Usted seleccionó: MOSTRAR LISTA DE PASAJEROS"
+				OrdenamientoAscendenteOdescendente(datosPasajero, dimDatPas1, dimDatPas2, dimDatPas3)
+				
+			"5":
+				Escribir " "
+				Escribir "======================================================================="
+				Escribir "Usted seleccionó: MOSTRAR LISTA VENTAS"
+				listados(cantidadPasajes, dimCanPas)
+				
+				
+				
+		FinSegun
+		
+	Mientras Que ConvertirANumero(seleccion) <> 6
+	
+	Escribir " "
+	Escribir "Saliendo Vv~"
+	Escribir "Muchas gracias por su visita."
+	Escribir "AEROLINEAS UTN - Since 2023 flying the classroom Vv~"
 	
 FinAlgoritmo
+	
