@@ -311,4 +311,146 @@ SubProceso datosPersonales(rutaVuelo Por Referencia, nombre Por Referencia, apel
 	FinSi
 	
 FinSubProceso
+
+// ----------------------------------------------------------------------------------------------------------------
+// FUNCION PARA VERIFICAR DISPONIBILIDAD EN EL VUELO SELECCIONADO
+Funcion disponibilidad = verificarDisponibilidad(rutaVuelo, capacidadPasajeros, dimCapPas)
+	
+	Definir disponibilidad Como Logico
+	
+	Si capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] <> 0 Entonces
+		
+		disponibilidad = Verdadero
+		
+	SiNo
+		
+		disponibilidad = Falso
+		
+	FinSi
+	
+FinFuncion
+
+
+// ----------------------------------------------------------------------------------------------------------------
+// SUBPROCESO PARA CALCULAR EL PRECIO DEL PASAJE
+SubProceso precioPasaje(rutaVuelo, costoPasaje Por Referencia, capacidadPasajeros, dimCapPas, asiento Por Referencia, equipajeBodega, cantidadPasajes, dimCanPas)
+	
+	Segun rutaVuelo Hacer
+		
+		"1":
+			Si capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] > 100 Entonces
+				
+				costoPasaje = 150000
+				
+			SiNo
+				
+				Si capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] > 60 Entonces
+					
+					costoPasaje = 150000 * 1.1
+					
+				SiNo
+					
+					costoPasaje = 180000
+					
+				FinSi
+			FinSi
+			
+			si ConvertirANumero(equipajeBodega) = 1 Entonces
+				
+				costoPasaje = costoPasaje * 1.05
+				
+			FinSi
+			
+			asiento = capacidadPasajeros[ConvertirANumero(rutaVuelo)-1]
+			capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] = capacidadPasajeros[ConvertirANumero(rutaVuelo)-1]  - 1
+			cantidadPasajes[ConvertirANumero(rutaVuelo)-1] = cantidadPasajes[ConvertirANumero(rutaVuelo)-1] + 1
+			
+		"2":
+			Si capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] > 100 Entonces
+				
+				costoPasaje = 120000					
+				
+			SiNo
+				
+				Si capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] > 60 Entonces
+					
+					costoPasaje = 120000 * 1.1
+					
+				SiNo
+					
+					costoPasaje = 150000					
+					
+				FinSi
+			FinSi
+			
+			si ConvertirANumero(equipajeBodega) = 1 Entonces
+				
+				costoPasaje = costoPasaje * 1.05
+				
+			FinSi
+			
+			asiento = capacidadPasajeros[ConvertirANumero(rutaVuelo)-1]
+			capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] = capacidadPasajeros[ConvertirANumero(rutaVuelo)-1]  - 1
+			cantidadPasajes[ConvertirANumero(rutaVuelo)-1] = cantidadPasajes[ConvertirANumero(rutaVuelo)-1] + 1
+			
+		"3":
+			Si capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] > 70 Entonces
+				
+				costoPasaje = 70000
+				
+			SiNo
+				
+				Si capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] > 40 Entonces
+					
+					costoPasaje = 70000 * 1.15
+					
+				SiNo
+					
+					costoPasaje = 95000
+					
+				FinSi
+				
+			FinSi
+			
+			si ConvertirANumero(equipajeBodega) = 1 Entonces
+				
+				costoPasaje = costoPasaje * 1.05
+				
+			FinSi
+			
+			asiento = capacidadPasajeros[ConvertirANumero(rutaVuelo)-1]
+			capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] = capacidadPasajeros[ConvertirANumero(rutaVuelo)-1]  - 1
+			cantidadPasajes[ConvertirANumero(rutaVuelo)-1] = cantidadPasajes[ConvertirANumero(rutaVuelo)-1] + 1
+			
+		"4":
+			Si capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] > 70 Entonces
+				
+				costoPasaje = 95000
+				
+			SiNo
+				
+				Si capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] > 40 Entonces
+					
+					costoPasaje = 95000 * 1.15
+					
+				SiNo
+					
+					costoPasaje = 125000
+					
+				FinSi
+			FinSi
+			
+			si ConvertirANumero(equipajeBodega) = 1 Entonces
+				
+				costoPasaje = costoPasaje * 1.05
+				
+			FinSi
+			
+			asiento = capacidadPasajeros[ConvertirANumero(rutaVuelo)-1]
+			capacidadPasajeros[ConvertirANumero(rutaVuelo)-1] = capacidadPasajeros[ConvertirANumero(rutaVuelo)-1]  - 1
+			cantidadPasajes[ConvertirANumero(rutaVuelo)-1] = cantidadPasajes[ConvertirANumero(rutaVuelo)-1] + 1
+			
+	FinSegun
+	
+FinSubProceso
 	
