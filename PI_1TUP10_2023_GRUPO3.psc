@@ -453,4 +453,450 @@ SubProceso precioPasaje(rutaVuelo, costoPasaje Por Referencia, capacidadPasajero
 	FinSegun
 	
 FinSubProceso
+
+// ----------------------------------------------------------------------------------------------------------------
+// SUBPROCESO PARA BUSCAR PASAJE VENDIDO (PUNTO 2)
+
+SubProceso buscarPasaje(rutaVuelo, rutasAereas, dimRutas, datosPasajero, dimDatPas1, dimDatPas2, dimDatPas3)
 	
+	Escribir " "
+	Escribir "Ingrese el destino de su vuelo"
+	Escribir "1. Buenos Aires - Bariloche"
+	Escribir "2. Bueno Aires - Salta"
+	Escribir "3. Rosario - Buenos Aires"
+	Escribir "4. Mar Del Plata - Mendoza"
+	
+	Repetir
+		
+		Leer rutaVuelo
+		
+		Si ConvertirANumero(rutaVuelo) < 1 o ConvertirANumero(rutaVuelo) > 4 Entonces
+			
+			Escribir " "
+			Escribir "Opción ingresada incorrecta, intente nuevamente."
+			
+		FinSi
+		
+	Mientras Que ConvertirANumero(rutaVuelo) < 1 o ConvertirANumero(rutaVuelo) > 4
+	
+	Escribir " "
+	Escribir "Ingrese el número de asiento:"// VALIDAR
+	
+	Segun rutaVuelo Hacer
+		
+		"1", "2":
+			Repetir
+				
+				Leer asiento
+				
+				Si asiento < 1 o asiento > 120 Entonces
+					
+					Escribir " "
+					Escribir "Asiento ingresado incorrectamente, intente nuevamente."
+					
+				FinSi
+				
+			Mientras Que asiento < 1 o asiento > 120
+			
+		"3", "4":
+			Repetir
+				
+				Leer asiento
+				
+				Si asiento < 1 o asiento > 80 Entonces
+					
+					Escribir " "
+					Escribir "Asiento ingresado incorrecto, intente nuevamente."
+					
+				FinSi
+				
+			Mientras Que asiento < 1 o asiento > 80	
+			
+	FinSegun
+	
+	Si datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 3] <> "" Entonces
+		
+		Escribir " "
+		Escribir "======================================================================="
+		Escribir  "Nombre y Apellido: ", datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 1]," ", datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 2]
+		
+		Segun datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 0] Hacer
+			"1": 
+				Mostrar "Ruta: ", rutasAereas[ConvertirANumero(rutaVuelo)-1]
+			"2": 
+				Mostrar "Ruta: ", rutasAereas[ConvertirANumero(rutaVuelo)-1]
+			"3": 
+				Mostrar "Ruta: ", rutasAereas[ConvertirANumero(rutaVuelo)-1]
+			"4": 
+				Mostrar "Ruta: ", rutasAereas[ConvertirANumero(rutaVuelo)-1]
+		FinSegun
+		
+		Escribir "DNI: ", datosPasajero[ConvertirANumero(rutaVuelo)-1, asiento-1, 3]
+		Escribir "======================================================================="
+		
+	SiNo
+		
+		Escribir " "
+		Escribir "El asiento ingresado no se encuentra asignado."
+		
+	FinSi
+	
+FinSubProceso
+// ----------------------------------------------------------------------------------------------------------------
+// SUBPROCESO PARA BUSCAR PASAJERO (PUNTO 3)
+SubProceso buscarPasajeroPorDNI(datosPasajero Por Referencia, dimDatPas1 Por Referencia, dimDatPas2 Por Referencia, dimDatPas3 Por Referencia)
+    Definir dniABuscar, i, j Como Entero
+    Definir encontrado Como Logico
+	encontrado = Falso
+    Imprimir "Ingrese el DNI del pasajero a buscar: "
+	Repetir
+		Leer dniABuscar
+		Si dniABuscar <= 999999 o dniABuscar >= 100000000 Entonces
+			Escribir "DNI ingresado no válido, intente nuevamente."
+		FinSi
+	Mientras Que dniABuscar <= 999999 o dniABuscar >= 100000000 
+    
+    Para i <- 0 Hasta dimDatPas1-1 Hacer
+        Para j <- 0 Hasta dimDatPas2-1 Hacer
+            Si ConvertirANumero(datosPasajero[i, j, 3]) == dniABuscar Entonces
+                encontrado = Verdadero
+				Imprimir " "
+				Imprimir "======================================================================="
+				Imprimir "Vuelo: ", datosPasajero[i, j, 0] 
+				Imprimir "Nombre: ", datosPasajero[i, j, 1]," ", datosPasajero[i, j, 2]
+				Imprimir "DNI: ", datosPasajero[i, j, 3]
+				Imprimir "Teléfono: ", datosPasajero[i, j, 4]
+				Imprimir "Asiento: ", datosPasajero[i, j, 7]
+				Imprimir "======================================================================="
+            FinSi
+        FinPara
+    FinPara
+	
+    si encontrado == Falso Entonces
+		Imprimir ""
+		Imprimir "El pasajero de DNI: ", dniABuscar, " no se encontro"
+    FinSi
+	
+FinSubProceso
+
+// ----------------------------------------------------------------------------------------------------------------
+// SUBPROCESO Ordenamiento ascendente o descente (PUNTO 4)
+SubProceso OrdenamientoAscendenteOdescendente (datosPasajero , dimDatPas1 , dimDatPas2 , dimDatPas3)
+	
+	Definir opcionOrdenamiento Como Entero
+	Definir aux Como Entero
+	Definir bandera Como Logico
+	bandera = Falso
+	
+	//Validar el swicht
+	Repetir 
+		Imprimir " "
+		Mostrar "Seleccione una opción de ordenamiento:"
+		Mostrar "1. Por número de asiento Ascendente"
+		Mostrar "2. Por número de asiento Descendente"
+		
+		Leer opcionOrdenamiento
+		
+		Si (opcionOrdenamiento <> 1) Y (opcionOrdenamiento <> 2)  Entonces
+			Imprimir " "
+			Mostrar "Opción no válida. Intente de nuevo."
+		FinSi
+	Hasta Que (opcionOrdenamiento = 1) O (opcionOrdenamiento = 2) 
+	
+	Repetir
+		
+		Imprimir " "
+		Escribir "Por favor seleccione el vuelo que quiere ordenar de forma ascendente:"
+		Escribir "1. Buenos Aires - Bariloche"
+		Escribir "2. Bueno Aires - Salta"
+		Escribir "3. Rosario - Buenos Aires"
+		Escribir "4. Mar Del Plata - Mendoza"
+		
+		leer dimDatPas1
+		
+	Hasta Que dimDatPas1 >= 1 Y dimDatPas1 <= 4
+	
+	Segun opcionOrdenamiento
+		1:
+			Segun dimDatPas1
+				1:				
+					Imprimir " "
+					Escribir "A continuación le mostramos el vuelo Buenos Aires - Bariloche ascendentemente."
+					Imprimir " "
+					Imprimir "======================================================================="
+					Para i<-0 Hasta dimDatPas2-1 Hacer
+						
+						Si datosPasajero[dimDatPas1-1, i, 7] <> "" Entonces
+							
+							Escribir "Asiento " i+1 ": " datosPasajero[dimDatPas1-1, i, 1] " " datosPasajero[dimDatPas1-1, i, 2]
+							bandera = Verdadero
+							
+						FinSi				
+						
+					Fin Para
+					
+					SI !bandera Entonces
+						
+						Escribir "No hay pasajes vendidos para el vuelo seleccionado."
+						
+					FinSi
+					Imprimir "======================================================================="
+					
+				2:
+					Imprimir " "
+					Escribir "A continuación le mostramos el vuelo Buenos Aires - Bariloche ascendentemente."
+					Imprimir "======================================================================="
+					Para i<-0 Hasta dimDatPas2-1 Hacer
+						
+						Si datosPasajero[dimDatPas1-1, i, 7] <> "" Entonces
+							
+							Escribir "Asiento " i+1 ": " datosPasajero[dimDatPas1-1, i, 1] " " datosPasajero[dimDatPas1-1, i, 2]
+							bandera = Verdadero
+							
+						FinSi				
+						
+					Fin Para
+					
+					SI !bandera Entonces
+						
+						Escribir "No hay pasajes vendidos para el vuelo seleccionado."
+						
+					FinSi
+					Imprimir "======================================================================="
+					
+				3:
+					Imprimir " "
+					Escribir "A continuación le mostramos el vuelo Buenos Aires - Bariloche ascendentemente."
+					Imprimir "======================================================================="
+					Para i<-0 Hasta dimDatPas2-1 Hacer
+						
+						Si datosPasajero[dimDatPas1-1, i, 7] <> "" Entonces
+							
+							Escribir "Asiento " i+1 ": " datosPasajero[dimDatPas1-1, i, 1] " " datosPasajero[dimDatPas1-1, i, 2]
+							bandera = Verdadero
+							
+						FinSi				
+						
+					Fin Para
+					
+					SI !bandera Entonces
+						
+						Escribir "No hay pasajes vendidos para el vuelo seleccionado."
+						
+					FinSi
+					Imprimir "======================================================================="
+					
+				4:
+					Imprimir " "
+					Escribir "A continuación le mostramos el vuelo Buenos Aires - Bariloche ascendentemente."
+					Imprimir "======================================================================="
+					Para i<-0 Hasta dimDatPas2-1 Hacer
+						
+						Si datosPasajero[dimDatPas1-1, i, 7] <> "" Entonces
+							
+							Escribir "Asiento " i+1 ": " datosPasajero[dimDatPas1-1, i, 1] " " datosPasajero[dimDatPas1-1, i, 2]
+							bandera = Verdadero
+							
+						FinSi				
+						
+					Fin Para
+					
+					SI !bandera Entonces
+						
+						Escribir "No hay pasajes vendidos para el vuelo seleccionado."
+						
+					FinSi
+					Imprimir "======================================================================="
+					
+			FinSegun
+			
+		2:
+			Segun dimDatPas1
+				1:					
+					Imprimir " "
+					Escribir "A continuación le mostramos el vuelo Buenos Aires - Bariloche ascendentemente."
+					Imprimir "======================================================================="
+					Para i<-dimDatPas2-1 Hasta 0 Con Paso -1 Hacer
+						
+						Si datosPasajero[dimDatPas1-1, i, 7] <> "" Entonces
+							
+							Escribir "Asiento " i+1 ": " datosPasajero[dimDatPas1-1, i, 1] " " datosPasajero[dimDatPas1-1, i, 2]
+							bandera = Verdadero
+							
+						FinSi				
+						
+					Fin Para
+					
+					SI !bandera Entonces
+						
+						Escribir "No hay pasajes vendidos para el vuelo seleccionado."
+						
+					FinSi
+					Imprimir "======================================================================="
+					
+				2:
+					Imprimir " "
+					Escribir "A continuación le mostramos el vuelo Buenos Aires - Bariloche ascendentemente."
+					Imprimir "======================================================================="
+					Para i<-dimDatPas2-1 Hasta 0 Con Paso -1 Hacer
+						
+						Si datosPasajero[dimDatPas1-1, i, 7] <> "" Entonces
+							
+							Escribir "Asiento " i+1 ": " datosPasajero[dimDatPas1-1, i, 1] " " datosPasajero[dimDatPas1-1, i, 2]
+							bandera = Verdadero
+							
+						FinSi				
+						
+					Fin Para
+					
+					SI !bandera Entonces
+						
+						Escribir "No hay pasajes vendidos para el vuelo seleccionado."
+						
+					FinSi
+					Imprimir "======================================================================="
+					
+				3:
+					Imprimir " "
+					Escribir "A continuación le mostramos el vuelo Buenos Aires - Bariloche ascendentemente."
+					Imprimir "======================================================================="
+					Para i<-dimDatPas2-1 Hasta 0 Con Paso -1 Hacer
+						
+						Si datosPasajero[dimDatPas1-1, i, 7] <> "" Entonces
+							
+							Escribir "Asiento " i+1 ": " datosPasajero[dimDatPas1-1, i, 1] " " datosPasajero[dimDatPas1-1, i, 2]
+							bandera = Verdadero
+							
+						FinSi				
+						
+					Fin Para
+					
+					SI !bandera Entonces
+						
+						Escribir "No hay pasajes vendidos para el vuelo seleccionado."
+						
+					FinSi
+					Imprimir "======================================================================="	
+					
+				4:
+					Imprimir " "
+					Escribir "A continuación le mostramos el vuelo Buenos Aires - Bariloche ascendentemente."
+					Imprimir "======================================================================="
+					Para i<-dimDatPas2-1 Hasta 0 Con Paso -1 Hacer
+						
+						Si datosPasajero[dimDatPas1-1, i, 7] <> "" Entonces
+							
+							Escribir "Asiento " i+1 ": " datosPasajero[dimDatPas1-1, i, 1] " " datosPasajero[dimDatPas1-1, i, 2]
+							bandera = Verdadero
+							
+						FinSi				
+						
+					Fin Para
+					
+					SI !bandera Entonces
+						
+						Escribir "No hay pasajes vendidos para el vuelo seleccionado."
+						
+					FinSi
+					Imprimir "======================================================================="
+					
+			FinSegun
+	FinSegun
+	
+FinSubProceso
+
+// ----------------------------------------------------------------------------------------------------------------
+// SUBPROCESO Listado/s a. Cantidad de pasajes vendido por ruta aérea b. Porcentaje de ventas por ruta aérea (PUNTO 5)
+
+SubProceso listados(cantidadPasajes, dimCanPas)
+	
+	Definir opcionOrdenamiento Como Entero
+	
+	//Validar el swicht
+	
+	Repetir 
+		Imprimir " "
+		Mostrar "Seleccione una opción para darle el listado:"
+		Mostrar "1. Cantidad de pasajes vendido por ruta aérea"
+		Mostrar "2. Porcentaje de ventas por ruta aérea"
+		
+		Leer opcionOrdenamiento
+		
+		Si (opcionOrdenamiento <> 1) Y (opcionOrdenamiento <> 2)  Entonces
+			Imprimir " "
+			Mostrar "Opción no válida. Intente de nuevo."
+		FinSi
+	Hasta Que (opcionOrdenamiento = 1) o (opcionOrdenamiento = 2) 
+	
+	Repetir
+		
+		Imprimir " "
+		Escribir "Seleccione el vuelo:"
+		Escribir "1. Buenos Aires - Bariloche"
+		Escribir "2. Bueno Aires - Salta"
+		Escribir "3. Rosario - Buenos Aires"
+		Escribir "4. Mar Del Plata - Mendoza"
+		
+		leer dimCanPas
+		
+	Hasta Que dimCanPas >= 1 Y dimCanPas <= 4
+	
+	Segun opcionOrdenamiento
+		1:
+			Segun dimCanPas
+				1:					
+					Imprimir " "
+					Imprimir "======================================================================="
+					Escribir "La cantidad de pasajes vendidos de Buenos Aires - Bariloche es: " cantidadPasajes[dimCanPas-1]
+					Imprimir "======================================================================="
+					
+				2:
+					Imprimir " "
+					Imprimir "======================================================================="
+					Escribir "La cantidad de pasajes vendidos de Bueno Aires - Salta es: " cantidadPasajes[dimCanPas-1]
+					Imprimir "======================================================================="
+					
+				3:
+					Imprimir " "
+					Imprimir "======================================================================="
+					Escribir "La cantidad de pasajes vendidos de Rosario - Buenos Aires es: " cantidadPasajes[dimCanPas-1]
+					Imprimir "======================================================================="
+					
+				4:
+					Imprimir " "
+					Imprimir "======================================================================="
+					Escribir "La cantidad de pasajes vendidos de Mar Del Plata - Mendoza es: " cantidadPasajes[dimCanPas-1]
+					Imprimir "======================================================================="
+					
+			FinSegun           
+			
+		2:
+			Segun dimCanPas
+				1:			
+					Imprimir " "
+					Imprimir "======================================================================="
+					Escribir "El porcentaje de ventas en el vuelo Buenos Aires - Bariloche es: % " (cantidadPasajes[dimCanPas-1] * 100) / 120
+					Imprimir "======================================================================="
+					
+				2:
+					Imprimir " "
+					Imprimir "======================================================================="
+					Escribir "El porcentaje de ventas en el vuelo Bueno Aires - Salta es: % " (cantidadPasajes[dimCanPas-1] * 100) / 120
+					Imprimir "======================================================================="
+					
+				3:
+					Imprimir " "
+					Imprimir "======================================================================="
+					Escribir "El porcentaje de ventas en el vuelo Rosario - Buenos Aires es: % " (cantidadPasajes[dimCanPas-1] * 100) / 80
+					Imprimir "======================================================================="
+					
+				4:
+					Imprimir " "
+					Imprimir "======================================================================="
+					Escribir "El porcentaje de ventas en el vuelo Mar Del Plata - Mendoza es: % " (cantidadPasajes[dimCanPas-1] * 100) / 80
+					Imprimir "======================================================================="
+					
+			FinSegun
+	FinSegun
+	
+FinSubProceso
