@@ -171,4 +171,144 @@ Algoritmo PI_1TUP10_2023_GRUPO3
 	Escribir "AEROLINEAS UTN - Since 2023 flying the classroom Vv~"
 	
 FinAlgoritmo
+
+// ----------------------------------------------------------------------------------------------------------------
+// SUBPROCESO PARA SOLICITAR LOS DATOS PERSONALES DEL PASAJERO EN LA VENTA DEL PASAJE (PUNTO 1)
+SubProceso datosPersonales(rutaVuelo Por Referencia, nombre Por Referencia, apellido Por Referencia, telefono Por Referencia, dni Por Referencia, nroPasajero Por Referencia, equipajeBodega Por Referencia, capacidadPasajeros, dimCapPas, noDisponibilidad Por Referencia)
+	
+	
+	// SOLICITUD DE RUTA DE VUELO
+	Escribir " "
+	Escribir "Por favor seleccione numéricamente el origen y destino deseado:"
+	Escribir "1. Buenos Aires - Bariloche"
+	Escribir "2. Bueno Aires - Salta"
+	Escribir "3. Rosario - Buenos Aires"
+	Escribir "4. Mar Del Plata - Mendoza"
+	
+	Repetir
+		
+		Leer rutaVuelo
+		
+		si ConvertirANumero(rutaVuelo) < 1 o ConvertirANumero(rutaVuelo) > 4 Entonces
+			
+			Escribir " "
+			Escribir "Opción ingresada incorrecta, intente nuevamente." // LAS VALIDACIONES PUEDEN SER CON UN SUBPROCESO
+			
+		FinSi
+		
+	Mientras Que ConvertirANumero(rutaVuelo) < 1 o ConvertirANumero(rutaVuelo) > 4
+	
+	// VERIFICACION DE DISPONIBILIDAD EN EL VUELO SELECCIONADO
+	disponibilidad = verificarDisponibilidad(rutaVuelo, capacidadPasajeros, dimCapPas)
+	
+	// SI HAY DISPONIBILIDAD SE SIGUE CON LA PETICION DE DATOS, SINO SE CANCELA
+	Si disponibilidad Entonces
+		
+		// SOLICITUD DE NOMBRE
+		Escribir " "
+		Escribir "Ingrese su nombre por favor:"
+		
+		Repetir
+			
+			Leer nombre
+			
+			// Verificar la longitud del DNI
+			Si Longitud(nombre) = 0 Entonces
+				Escribir " "
+				Escribir "El nombre no puede quedar vacío, intente nuevamente."
+			FinSi
+			
+		Hasta Que Longitud(nombre) > 0
+		
+		// SOLICITUD DE APELLIDO
+		Escribir " "
+		Escribir "Ingrese su apellido por favor:"
+		
+		Repetir
+			
+			Leer apellido
+			
+			// Verificar la longitud del DNI
+			Si Longitud(apellido) = 0 Entonces
+				Escribir " "
+				Escribir "El apellido no puede quedar vacío, intente nuevamente."
+			FinSi
+			
+		Hasta Que Longitud(apellido) > 0
+		
+		// SOLICITUD DE TELÉFONO
+		Escribir " "
+		Escribir "Ingrese su teléfono por favor:"
+		
+		Repetir
+			
+			Leer telefono
+			
+			// Validar longitud del número de teléfono
+			Si Longitud(telefono) = 0 Entonces
+				Escribir " "
+				Escribir "El número de teléfono no puede quedar vacío, intente nuevamente."
+			FinSi
+		Hasta que Longitud(telefono) > 0
+		
+		// SOLICITUD DE DNI
+		
+		Repetir
+			// Leer el DNI
+			Escribir " "
+			Escribir "Ingrese el DNI:"
+			Leer dni
+			
+			// Verificar la longitud del DNI
+			Si Longitud(dni) <= 6 o Longitud(dni) >= 9 Entonces
+				Escribir "DNI ingresado no válido, intente nuevamente."
+			FinSi
+			
+		Mientras Que Longitud(dni) <= 6 o Longitud(dni) >= 9
+		
+		
+		// SOLICITUD DE NÚMERO DE PASAJERO
+		Escribir " "
+		Mostrar "Si usted frecuenta nuestra aerolínea, ingrese su número de pasajero por favor:"
+		
+		Repetir
+			
+			Leer nroPasajero
+			
+			Si ConvertirANumero(nroPasajero) < 1 o ConvertirANumero(nroPasajero) > 99999 Entonces
+				
+				Escribir " "
+				Escribir "Número de pasajero ingresado no válido, intente nuevamente."
+				
+			FinSi
+			
+		Mientras Que ConvertirANumero(nroPasajero) < 1 o ConvertirANumero(nroPasajero) > 99999
+		
+		// ELECCION EQUIPAJE EN BODEGA SI - NO
+		Escribir " "
+		Mostrar "Desea guardar el equipaje en la bodega? Ingrese 1 si lo desea o 0 si no"
+		
+		Repetir
+			
+			Leer equipajeBodega
+			
+			Si ConvertirANumero(equipajeBodega) <> 1 y ConvertirANumero(equipajeBodega) <> 0 Entonces
+				
+				Escribir " "
+				Escribir "Valor ingresado no válido, intente nuevamente."
+				
+			FinSi
+			
+		Mientras Que ConvertirANumero(equipajeBodega) <> 1 y ConvertirANumero(equipajeBodega) <> 0
+		
+		
+	SiNo
+		
+		Escribir " "
+		Escribir "Lo sentimos, no hay butacas disponibles para el vuelo seleccionado."
+		Escribir noDisponibilidad = Verdadero
+		
+	FinSi
+	
+FinSubProceso
 	
